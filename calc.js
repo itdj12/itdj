@@ -35,6 +35,12 @@ function exec(num) {
     let eatk1 = target.querySelector('input#eatk1').value * 1;
     let msick = target.querySelector('input#msick').value * 1;
     let mesick = target.querySelector('input#mesick').value * 1;
+    let watk = target.querySelector('input#watk').value * 1;
+    let skpatk = target.querySelector('input#skpatk').value * 1;
+    let skratk = target.querySelector('input#skratk').value * 1;
+
+    var wattk = watk * (1 + skpatk / 100);
+    var skrratk = wattk + skratk;
     
     var re0 = atk * add * alr * bal * cri * dongsuk * skatk * epen2;
     var re1 = re0 * (1 + eam / 100);
@@ -43,8 +49,14 @@ function exec(num) {
     var re4 = re3 * (1 + eatk1 / 100);
     var re5 = re4 * (1 + msick / 100);
     var re6 = re5 * (1 + mesick / 100);
-    document.querySelector("#nocritdmg").value = re0.toFixed(0);
-    document.querySelector("#critdmg").value = re6.toFixed(0);
+    var re6 = re5 * (1 + mesick / 100);
+    var re6 = re5 * (1 + mesick / 100);
+    var re7 = re6 * skrratk;
+    var xre = re0 * skrratk;
+    console.log(re7)
+
+    document.querySelector("#nocritdmg").value = xre.toFixed(0);
+    document.querySelector("#critdmg").value = re7.toFixed(0);
 
     document.querySelectorAll("#atk")[1].value = atk.toFixed(2);
     document.querySelectorAll("#eatk")[1].value = add.toFixed(2);
