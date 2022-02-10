@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>인던 스텟 공격력 계산기</title>
+    <meta name="viewport" content="width=650">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="calc.js"></script>
+    <style>
+        select {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        input {
+            width: calc(100% - 4px);
+            margin: 0;
+            padding: 0;
+        }
+
+        #timecalc input {
+            width: calc(50% - 20px);
+            margin: 0;
+            padding: 0;
+        }
+
+        input#timedeal1,
+        input#timedeal2,
+        input#dpm1,
+        input#dpm2 {
+            width: calc(100% - 4px);
+            margin: 0;
+            padding: 0;
+        }
+
+        tr td:first-child {
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='container' style='width: fit-content;'>
+        <hr>
+        <div id='header' style='text-align: center; font-size: 30px; font-weight: bold;'>인던 스텟 계산기</div>
+        <hr>
+        <hr>
+        <div id='calc' style='width: 690px; margin: 0; padding: 0;'>
+            <table style='table-layout:fixed; margin: 0 auto;'>
+                <col width="200px" />
+                <col width="120px" />
+                <tr>
+                    <td nowrap>대상</td>
+                    <td>
+                        <select id="boss"
+                            onchange="if(this.value == 'custom') {document.querySelectorAll('.customstat').forEach(function(x){x.style.display='';});} else {document.querySelectorAll('.customstat').forEach(function(x){x.style.display='none';});}">
+                            <option label="개발 중" value="hell"></option>
+                            <option label="사용자 정의 개발중" value="custom"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class='customstat' style='display: none;'>
+                    <td nowrap>방어력</td>
+                    <td><input id='bossdef' value='0'></td>
+                </tr>
+                <tr class='customstat' style='display: none;'>
+                    <td nowrap>보스 크리티컬 저항</td>
+                    <td><input id='bossres' value='0'></td>
+                </tr>
+                <tr class='customstat' style='display: none;'>
+                    <td nowrap>원소 방어력</td>
+                    <td><input id='bossdongsukres' value='0'></td>
+                </tr>
+            </table>
+            <hr>
+            <hr>
+            <div id='calc1' style='display: inline-block; width: 340px;'>
+                <div style='text-align: center;'>캐릭터 스텟</div>
+                <div id='input'>
+                    <table style='table-layout:fixed;'>
+                        <col width="200px" />
+                        <col width="120px" />
+                        <tr>
+                            <td nowrap>공격력</td>
+                            <td><input id='atk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>속성 공격력</td>
+                            <td><input id='eatk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>치명 피해(백분율 숫자만)</td>
+                            <td><input id='criatk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>보스 피해(백분율 숫자만)</td>
+                            <td><input id='batk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>치명타(백분율 숫자만)</td>
+                            <td><input id='cri' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>일반공격 피해</td>
+                            <td><input id='nmatk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>스킬 피해</td>
+                            <td><input id='skatk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>원소 관통력</td>
+                            <td><input id='epen' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>방어 관통</td>
+                            <td><input id='pen' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>속성 증폭</td>
+                            <td><input id='eam' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>피해 증폭</td>
+                            <td><input id='dmgam' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>억제 증폭</td>
+                            <td><input id='stam' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>원소 피해</td>
+                            <td><input id='eatk1' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>몬스터 받는 피해</td>
+                            <td><input id='msick' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>몬스터 받는 원소 피해</td>
+                            <td><input id='mesick' value='0'></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <button style='width: 324px;' onclick='exec(1);'>캐릭터 전투력 계산</button>
+                </div>
+                <div id='output'>
+                    <table style='table-layout:fixed;'>
+                        <col width="200px" />
+                        <col width="120px" />
+                        <tr>
+                            <td nowrap>유효 전투력 (증폭,피해 미적용)</td>
+                            <td nowrap><input id='nocritdmg'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>유효 전투력 (증폭,피해 적용)</td>
+                            <td nowrap><input id='critdmg'></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id='calc2' style='display: inline-block; width: 340px;'>
+                <div style='text-align: center;'>계산식 수치</div>
+                <div id='input'>
+                    <table style='table-layout:fixed;'>
+                        <col width="200px" />
+                        <col width="120px" />
+                        <tr>
+                            <td nowrap>공격력</td>
+                            <td><input id='atk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>속성 공격력</td>
+                            <td><input id='eatk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>치명 피해(백분율 숫자만)</td>
+                            <td><input id='criatk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>보스 피해(백분율 숫자만)</td>
+                            <td><input id='batk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>치명타(백분율 숫자만)</td>
+                            <td><input id='cri' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>일반공격 피해</td>
+                            <td><input id='nmatk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>스킬 피해</td>
+                            <td><input id='skatk' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>원소 관통력</td>
+                            <td><input id='epen' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>방어 관통</td>
+                            <td><input id='pen' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>속성 증폭</td>
+                            <td><input id='eam' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>피해 증폭</td>
+                            <td><input id='dmgam' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>억제 증폭</td>
+                            <td><input id='stam' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>원소 피해</td>
+                            <td><input id='eatk1' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>몬스터 받는 피해</td>
+                            <td><input id='msick' value='0'></td>
+                        </tr>
+                        <tr>
+                            <td nowrap>몬스터 받는 원소 피해</td>
+                            <td><input id='mesick' value='0'></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <button style='width: 324px;'>증폭,피해 옵션은 최종데미지 퍼센트 증감 계산</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id='footer' style='width: fit-content; margin: 0 auto; text-size-adjust:none; font-weight: bold;'>
+            본 계산기의 스텟 계산식은 <a style="color: black;" href='https://cafe.naver.com/intothedungeon/52853'
+                target='blank'>https://cafe.naver.com/int...</a> 글을 참고했습니다.
+        </div>
+    </div>
+</body>
+
+</html>
