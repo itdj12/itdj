@@ -49,8 +49,6 @@ function exec(num) {
     var re4 = re3 * (1 + eatk1 / 100);
     var re5 = re4 * (1 + msick / 100);
     var re6 = re5 * (1 + mesick / 100);
-    var re6 = re5 * (1 + mesick / 100);
-    var re6 = re5 * (1 + mesick / 100);
     var re7 = re6 * skrratk;
     var xre = re0 * skrratk;
     console.log(re7)
